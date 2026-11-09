@@ -268,6 +268,12 @@ table.sched td{vertical-align:top}
     </div>
   </div>
 </header>
+<nav class="tabs" id="tabs">
+  <button data-tab="overview" class="active"><span class="ic">📊</span><span>总览</span></button>
+  <button data-tab="schedule"><span class="ic">📚</span><span>课表</span></button>
+  <button data-tab="tasks"><span class="ic">✅</span><span>计划</span></button>
+  <button data-tab="period"><span class="ic">🌸</span><span>生理期</span></button>
+</nav>
 <div id="storageWarn" class="storage-warn hidden">
   ⚠️ 浏览器本地存储被禁用，改动可能无法保存（常见于无痕模式、file 协议受限或禁止了站点数据）。
   请改用普通模式打开，或用右上角「⬇ 导出」手动备份、「⬆ 导入」恢复。
@@ -1404,11 +1410,5 @@ if('serviceWorker' in navigator){
   try{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){}
 }
 </script>
-<nav class="tabs" id="tabs">
-  <button data-tab="overview" class="active"><span class="ic">📊</span><span>总览</span></button>
-  <button data-tab="schedule"><span class="ic">📚</span><span>课表</span></button>
-  <button data-tab="tasks"><span class="ic">✅</span><span>计划</span></button>
-  <button data-tab="period"><span class="ic">🌸</span><span>生理期</span></button>
-</nav>
 </body>
 </html>
