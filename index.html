@@ -29,6 +29,22 @@
   --warn:#ff9500;
   --danger:#ff3b30;
   --radius:18px;
+  --bar:rgba(249,249,249,.82);
+  --bar-solid:rgba(249,249,249,.92);
+}
+body[data-theme="dark"]{
+  --bg:#000000;--card:#1c1c1e;--ink:#ffffff;--ink2:#d1d1d6;
+  --muted:#98989d;--line:#38383a;--fill:#2c2c2e;--fill2:#1c1c1e;
+  --primary:#0a84ff;--primary-2:#409cff;
+  --bar:rgba(28,28,30,.82);--bar-solid:rgba(28,28,30,.92);
+}
+body[data-theme="pink"]{
+  --bg:#fdf2f6;--card:#ffffff;--fill:#fbe4ec;--fill2:#fdf2f6;
+  --primary:#ff2d78;--primary-2:#ff6b9d;--accent:#ff2d55;
+}
+body[data-theme="mint"]{
+  --bg:#f0f7f4;--card:#ffffff;--fill:#e2efe9;--fill2:#f0f7f4;
+  --primary:#00a86b;--primary-2:#2ec98a;--ok:#00a86b;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
@@ -44,7 +60,7 @@ input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
 /* ===== 顶部导航（毛玻璃） ===== */
 header{
   position:sticky;top:0;z-index:20;
-  background:rgba(249,249,249,.82);
+  background:var(--bar);
   -webkit-backdrop-filter:saturate(180%) blur(20px);
   backdrop-filter:saturate(180%) blur(20px);
   color:var(--ink);
@@ -63,7 +79,7 @@ header .date-pill{font-size:13px;color:var(--muted);padding:4px 8px;white-space:
 nav.tabs{
   position:fixed;left:0;right:0;bottom:0;z-index:30;
   display:flex;
-  background:rgba(249,249,249,.92);
+  background:var(--bar-solid);
   -webkit-backdrop-filter:saturate(180%) blur(20px);
   backdrop-filter:saturate(180%) blur(20px);
   border-top:1px solid rgba(0,0,0,.08);
@@ -74,7 +90,8 @@ nav.tabs button{
   padding:8px 0 6px;font-size:10px;color:var(--muted);font-weight:500;
   transition:.15s;background:transparent;
 }
-nav.tabs button .ic{font-size:22px;line-height:1}
+nav.tabs button .ic{display:flex;align-items:center;justify-content:center;width:24px;height:24px}
+nav.tabs button .ic svg{width:22px;height:22px}
 nav.tabs button.active{color:var(--primary);font-weight:600;background:transparent;box-shadow:none}
 
 /* ===== 主体 ===== */
@@ -214,12 +231,23 @@ table.sched td{vertical-align:top}
 .month-cell.today{outline:2px solid var(--primary)}
 .month-cell .mnum{font-size:13px;font-weight:600;margin-bottom:3px}
 .month-cell.today .mnum{color:var(--primary)}
+.month-mark{font-size:9px;margin-left:2px;padding:0 3px;border-radius:4px;font-weight:500}
+.month-mark.term{color:#00a86b;background:rgba(0,168,107,.14)}
+.month-mark.holiday{color:#ff3b30;background:rgba(255,59,48,.14)}
 .month-ev{display:flex;align-items:center;gap:4px;font-size:10px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}
 .month-ev .dot{width:6px;height:6px;border-radius:50%;flex:0 0 auto}
 .month-cell .more{font-size:10px;color:var(--muted);margin-top:2px}
 .month-ev-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--fill2);border-radius:10px;margin-bottom:6px;font-size:14px}
 .month-ev-item .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
 .month-ev-item .ttl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== 主题 & 设置 ===== */
+.theme-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.theme-item{border-radius:14px;padding:12px;cursor:pointer;border:2px solid var(--line);transition:.15s}
+.theme-item.on{border-color:var(--primary)}
+.theme-item .sw{display:flex;gap:4px;margin-bottom:8px}
+.theme-item .sw i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.1)}
+.theme-item .nm{font-size:14px;font-weight:600}
 
 /* ===== 弹窗 ===== */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50;display:none;align-items:flex-end;justify-content:center}
@@ -269,10 +297,11 @@ table.sched td{vertical-align:top}
   </div>
 </header>
 <nav class="tabs" id="tabs">
-  <button data-tab="overview" class="active"><span class="ic">📊</span><span>总览</span></button>
-  <button data-tab="schedule"><span class="ic">📚</span><span>课表</span></button>
-  <button data-tab="tasks"><span class="ic">✅</span><span>计划</span></button>
-  <button data-tab="period"><span class="ic">🌸</span><span>生理期</span></button>
+  <button data-tab="overview" class="active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span>总览</span></button>
+  <button data-tab="schedule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h5v18H6a2 2 0 01-2-2zM20 5a2 2 0 00-2-2h-5v18h5a2 2 0 002-2z"/></svg></span><span>课表</span></button>
+  <button data-tab="tasks"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span>计划</span></button>
+  <button data-tab="period"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="7" r="2"/></svg></span><span>生理期</span></button>
+  <button data-tab="settings"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></span><span>设置</span></button>
 </nav>
 <div id="storageWarn" class="storage-warn hidden">
   ⚠️ 浏览器本地存储被禁用，改动可能无法保存（常见于无痕模式、file 协议受限或禁止了站点数据）。
@@ -445,6 +474,22 @@ table.sched td{vertical-align:top}
       </div>
     </div>
   </section>
+
+  <!-- ============ 设置 ============ -->
+  <section class="tab" id="tab-settings">
+    <div class="card">
+      <h3>主题风格</h3>
+      <div class="theme-list" id="themeList"></div>
+    </div>
+    <div class="card">
+      <h3>关于</h3>
+      <div class="small muted" style="line-height:1.8">
+        时间管家 · 课表 / 计划 / 生理期<br>
+        数据保存在本机浏览器，不会上传到服务器。<br>
+        右上角「⬇ 导出 / ⬆ 导入」可备份和迁移数据。
+      </div>
+    </div>
+  </section>
 </main>
 
 <!-- 课程弹窗 -->
@@ -609,6 +654,38 @@ const PRIO_LABEL = ['低','中','高'];
 const PRIO_COLORS = ['#94a3b8','#f59e0b','#ef4444']; // 低、中、高
 const EVENT_TYPES = ['纪念日','生日','考试','活动','其他'];
 const EVENT_COLORS = ['#ff2d55','#ff9500','#007aff','#34c759','#8e8e93'];
+// 二十四节气（公历月日近似，格式 MMDD）
+const SOLAR_TERMS = [
+  ['小寒','0105'],['大寒','0120'],['立春','0204'],['雨水','0219'],
+  ['惊蛰','0305'],['春分','0320'],['清明','0405'],['谷雨','0420'],
+  ['立夏','0505'],['小满','0521'],['芒种','0606'],['夏至','0621'],
+  ['小暑','0707'],['大暑','0723'],['立秋','0807'],['处暑','0823'],
+  ['白露','0907'],['秋分','0923'],['寒露','1008'],['霜降','1023'],
+  ['立冬','1107'],['小雪','1122'],['大雪','1207'],['冬至','1222'],
+];
+// 公历固定节日
+const FIXED_HOLIDAYS = [
+  ['元旦','0101'],['妇女节','0308'],['劳动节','0501'],['青年节','0504'],
+  ['儿童节','0601'],['建党节','0701'],['建军节','0801'],['教师节','0910'],
+  ['国庆节','1001'],['圣诞节','1225'],
+];
+// 农历节日（公历日期，按年份，格式 MMDD）
+const LUNAR_HOLIDAYS = {
+  '2024':{'春节':'0210','元宵节':'0224','端午节':'0610','中秋节':'0917','重阳节':'1011'},
+  '2025':{'春节':'0129','元宵节':'0212','端午节':'0531','中秋节':'1006','重阳节':'1029'},
+  '2026':{'春节':'0217','元宵节':'0303','端午节':'0619','中秋节':'0925','重阳节':'1018'},
+  '2027':{'春节':'0206','元宵节':'0220','端午节':'0609','中秋节':'0915','重阳节':'1008'},
+  '2028':{'春节':'0126','元宵节':'0209','端午节':'0528','中秋节':'1003','重阳节':'1026'},
+  '2029':{'春节':'0213','元宵节':'0227','端午节':'0616','中秋节':'0922','重阳节':'1016'},
+  '2030':{'春节':'0203','元宵节':'0217','端午节':'0605','中秋节':'0912','重阳节':'1005'},
+};
+// 主题
+const THEMES = [
+  {id:'light', name:'浅色', sw:['#f2f2f7','#ffffff','#007aff']},
+  {id:'dark',  name:'深色', sw:['#000000','#1c1c1e','#0a84ff']},
+  {id:'pink',  name:'粉彩', sw:['#fdf2f6','#ffffff','#ff2d78']},
+  {id:'mint',  name:'薄荷', sw:['#f0f7f4','#ffffff','#00a86b']},
+];
 const TL_START = 7*60;   // 时间轴起点 07:00
 const TL_END   = 23*60;  // 时间轴终点 23:00
 const TL_RANGE = TL_END - TL_START;
@@ -634,9 +711,10 @@ let DB = loadData() || {
   tasks: [],     // {id,title,date,start,end,cat,priority,done,note}
   periods: [],   // {id,start,duration}
   events: [],    // {id,date,title,type,color}
-  settings: { periodLen:5, cycleLen:0 }
+  settings: { periodLen:5, cycleLen:0, theme:'light' }
 };
 if(!DB.events) DB.events = [];
+if(!DB.settings.theme) DB.settings.theme = 'light';
 function save(){
   const ok = storageSet(KEY, JSON.stringify(DB));
   showStorageWarn();
@@ -1253,6 +1331,16 @@ el('wkToday').addEventListener('click', ()=>{ tlDate=todayStr(); renderWeek(); }
 
 /* ================= 月视图（重要日子） ================= */
 let monthCursor = new Date();
+function dayMarkers(dateStr){
+  const mdd = dateStr.slice(5).replace('-','');
+  const year = dateStr.slice(0,4);
+  const marks = [];
+  SOLAR_TERMS.forEach(([name,d])=>{ if(d===mdd) marks.push({name, kind:'term'}); });
+  FIXED_HOLIDAYS.forEach(([name,d])=>{ if(d===mdd) marks.push({name, kind:'holiday'}); });
+  const lh = LUNAR_HOLIDAYS[year];
+  if(lh){ Object.keys(lh).forEach(name=>{ if(lh[name]===mdd) marks.push({name, kind:'holiday'}); }); }
+  return marks;
+}
 function renderMonth(){
   const y=monthCursor.getFullYear(), m=monthCursor.getMonth();
   el('moMonth').textContent = y+'年'+(m+1)+'月';
@@ -1266,8 +1354,11 @@ function renderMonth(){
   for(let d=1;d<=daysInMonth;d++){
     const ds=toStr(new Date(y,m,d));
     const evs=DB.events.filter(e=>e.date===ds).sort((a,b)=>a.title<b.title?-1:1);
+    const marks=dayMarkers(ds);
     html+='<div class="month-cell'+(ds===today?' today':'')+'" data-date="'+ds+'">'
-      +'<div class="mnum">'+d+'</div>';
+      +'<div class="mnum">'+d;
+    marks.forEach(mk=>{ html+='<span class="month-mark '+mk.kind+'">'+esc(mk.name)+'</span>'; });
+    html+='</div>';
     evs.slice(0,2).forEach(e=>{
       html+='<div class="month-ev"><span class="dot" style="background:'+e.color+'"></span>'+esc(e.title)+'</div>';
     });
@@ -1321,6 +1412,26 @@ el('eventAdd').addEventListener('click', ()=>{
 });
 el('eventCancel').addEventListener('click', ()=>el('eventModal').classList.remove('open'));
 
+/* ================= 主题切换 ================= */
+function applyTheme(id){
+  const t = THEMES.find(x=>x.id===id) ? id : 'light';
+  document.body.dataset.theme = t;
+  DB.settings.theme = t;
+  renderThemes();
+}
+function renderThemes(){
+  const box = el('themeList');
+  const cur = DB.settings.theme || 'light';
+  box.innerHTML = THEMES.map(t=>
+    '<div class="theme-item'+(t.id===cur?' on':'')+'" data-theme="'+t.id+'">'
+    +'<div class="sw">'+t.sw.map(c=>'<i style="background:'+c+'"></i>').join('')+'</div>'
+    +'<div class="nm">'+t.name+'</div></div>'
+  ).join('');
+  box.querySelectorAll('.theme-item').forEach(item=>{
+    item.addEventListener('click', ()=>{ applyTheme(item.dataset.theme); save(); });
+  });
+}
+
 function renderToday(){
   const today=todayStr();
   const list=DB.tasks.filter(t=>t.date===today).sort((a,b)=>(a.done-b.done)||((a.start||'99')<(b.start||'99')?-1:1));
@@ -1358,6 +1469,7 @@ function init(){
   updatePeriodLenUI();
   el('setCycleLen').value = DB.settings.cycleLen;
   el('eventType').innerHTML = EVENT_TYPES.map((t,i)=>'<option value="'+i+'">'+t+'</option>').join('');
+  applyTheme(DB.settings.theme || 'light');
   showStorageWarn();
   renderSchedule();
   renderTasks();
@@ -1393,7 +1505,8 @@ el('importFile').addEventListener('change', e=>{
         return;
       }
       DB = data;
-      if(!DB.settings) DB.settings = { periodLen:5, cycleLen:0 };
+      if(!DB.settings) DB.settings = { periodLen:5, cycleLen:0, theme:'light' };
+      if(!DB.settings.theme) DB.settings.theme = 'light';
       if(!DB.events) DB.events = [];
       save();
       init();
