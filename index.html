@@ -204,20 +204,20 @@ table.sched td{vertical-align:top}
 .btn.ghost.active{background:var(--primary);color:#fff}
 
 /* ===== 周视图 ===== */
-.week-scroll{overflow-x:auto}
-.week-grid{display:grid;grid-template-columns:repeat(7,minmax(112px,1fr));gap:8px;min-width:820px}
-.week-col{background:var(--fill2);border-radius:14px;padding:6px 6px 10px;min-height:240px;cursor:pointer;transition:.12s}
+.week-scroll{overflow:hidden}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.week-col{background:var(--fill2);border-radius:10px;padding:4px 3px 8px;min-height:0;cursor:pointer;transition:.12s}
 .week-col:active{background:var(--line)}
 .week-col.today{outline:2px solid var(--primary)}
-.week-col .wh{font-size:12px;font-weight:600;text-align:center;padding:4px 0 6px;border-bottom:1px solid var(--line);margin-bottom:6px}
-.week-col .wh .d{font-weight:400;color:var(--muted);font-size:11px}
-.week-item{display:flex;align-items:stretch;gap:5px;background:#fff;border-radius:9px;padding:4px 6px;margin-bottom:4px;font-size:11px}
-.week-item .bar{width:3px;border-radius:2px;flex:0 0 auto}
+.week-col .wh{font-size:11px;font-weight:600;text-align:center;padding:3px 0 5px;border-bottom:1px solid var(--line);margin-bottom:5px}
+.week-col .wh .d{font-weight:400;color:var(--muted);font-size:10px;display:block}
+.week-item{display:flex;align-items:stretch;gap:3px;background:#fff;border-radius:7px;padding:3px 4px;margin-bottom:3px;font-size:10px}
+.week-item .bar{width:2px;border-radius:2px;flex:0 0 auto}
 .week-item .wbody{min-width:0}
-.week-item .wt{font-weight:500;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.week-item .wtime{font-size:10px;color:var(--muted)}
+.week-item .wt{font-weight:500;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.week-item .wtime{font-size:9px;color:var(--muted)}
 .week-item.done .wt{text-decoration:line-through;opacity:.6}
-.week-empty{font-size:11px;color:var(--muted);text-align:center;padding:14px 0}
+.week-empty{font-size:10px;color:var(--muted);text-align:center;padding:12px 0}
 
 /* ===== 月视图 ===== */
 .month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -234,6 +234,11 @@ table.sched td{vertical-align:top}
 .month-mark{font-size:9px;margin-left:2px;padding:0 3px;border-radius:4px;font-weight:500}
 .month-mark.term{color:#00a86b;background:rgba(0,168,107,.14)}
 .month-mark.holiday{color:#ff3b30;background:rgba(255,59,48,.14)}
+.period-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:3px;vertical-align:1px}
+.period-dot.period{background:#ff2d55}
+.period-dot.period-pred{background:#ff9eb5}
+.period-dot.ovu{background:#409cff}
+.month-cell.period-day{background:rgba(255,45,85,.12)}
 .month-ev{display:flex;align-items:center;gap:4px;font-size:10px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}
 .month-ev .dot{width:6px;height:6px;border-radius:50%;flex:0 0 auto}
 .month-cell .more{font-size:10px;color:var(--muted);margin-top:2px}
@@ -305,10 +310,10 @@ table.sched td{vertical-align:top}
 </header>
 <nav class="tabs" id="tabs">
   <button data-tab="overview" class="active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span>总览</span></button>
-  <button data-tab="schedule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h5v18H6a2 2 0 01-2-2zM20 5a2 2 0 00-2-2h-5v18h5a2 2 0 002-2z"/></svg></span><span>课表</span></button>
   <button data-tab="tasks"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span>计划</span></button>
-  <button data-tab="period"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="7" r="2"/></svg></span><span>生理期</span></button>
+  <button data-tab="schedule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h5v18H6a2 2 0 01-2-2zM20 5a2 2 0 00-2-2h-5v18h5a2 2 0 002-2z"/></svg></span><span>课表</span></button>
   <button data-tab="workout"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg></span><span>运动</span></button>
+  <button data-tab="period"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="7" r="2"/></svg></span><span>生理期</span></button>
   <button data-tab="settings"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></span><span>设置</span></button>
 </nav>
 <div id="storageWarn" class="storage-warn hidden">
@@ -347,6 +352,7 @@ table.sched td{vertical-align:top}
           <span><i style="background:#f59e0b"></i> 中优先</span>
           <span><i style="background:#94a3b8"></i> 低优先</span>
           <span><i style="background:#22c08f"></i> 已完成</span>
+          <span><i style="background:#0ea5e9"></i> 运动</span>
         </div>
       </div>
       <div id="weekView" class="hidden">
@@ -421,6 +427,26 @@ table.sched td{vertical-align:top}
   <!-- ============ 生理期 ============ -->
   <section class="tab" id="tab-period">
     <div class="card">
+      <h3>记录经期 <span class="hint">手动添加或调整</span></h3>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field" style="margin:0">
+          <label>开始日期</label>
+          <input type="date" id="periodStartDate">
+        </div>
+        <div class="field" style="margin:0">
+          <label>持续天数</label>
+          <input type="number" id="periodDuration" min="1" max="15" value="5">
+        </div>
+      </div>
+      <button class="btn" id="addPeriodBtn">＋ 记录本次经期</button>
+    </div>
+
+    <div class="card">
+      <h3>历史记录</h3>
+      <div id="periodRecs"></div>
+    </div>
+
+    <div class="card">
       <div class="cal-head">
         <button class="icon-btn" id="calPrev">‹</button>
         <div class="month" id="calMonth"></div>
@@ -449,26 +475,6 @@ table.sched td{vertical-align:top}
     </div>
 
     <div class="card">
-      <h3>记录经期 <span class="hint">手动添加或调整</span></h3>
-      <div class="grid2" style="margin-bottom:10px">
-        <div class="field" style="margin:0">
-          <label>开始日期</label>
-          <input type="date" id="periodStartDate">
-        </div>
-        <div class="field" style="margin:0">
-          <label>持续天数</label>
-          <input type="number" id="periodDuration" min="1" max="15" value="5">
-        </div>
-      </div>
-      <button class="btn" id="addPeriodBtn">＋ 记录本次经期</button>
-    </div>
-
-    <div class="card">
-      <h3>历史记录</h3>
-      <div id="periodRecs"></div>
-    </div>
-
-    <div class="card">
       <h3>设置</h3>
       <div class="grid2">
         <div class="field" style="margin:0">
@@ -486,16 +492,26 @@ table.sched td{vertical-align:top}
   <!-- ============ 运动 ============ -->
   <section class="tab" id="tab-workout">
     <div class="card">
-      <h3>运动统计</h3>
-      <div class="stats" id="workoutStats"></div>
-    </div>
-    <div class="card">
       <div class="row" style="margin-bottom:12px">
         <h3 style="margin:0">运动记录</h3>
         <div class="spacer"></div>
         <button class="btn mini" id="addWorkoutBtn">＋ 记录运动</button>
       </div>
       <div id="workoutList"></div>
+    </div>
+    <div class="card">
+      <div class="cal-head">
+        <button class="icon-btn" id="woPrev">‹</button>
+        <div class="month" id="woMonth"></div>
+        <button class="icon-btn" id="woNext">›</button>
+        <button class="btn ghost mini" id="woToday">本月</button>
+      </div>
+      <div class="month-grid" id="workoutMonthGrid"></div>
+      <div class="tl-legend"><span class="small muted">本月运动总览 · 点击日期可查看当天</span></div>
+    </div>
+    <div class="card">
+      <h3>运动统计</h3>
+      <div class="stats" id="workoutStats"></div>
     </div>
   </section>
 
@@ -507,6 +523,13 @@ table.sched td{vertical-align:top}
     </div>
     <div class="card">
       <h3>功能开关 <span class="hint">关闭后对应入口会隐藏</span></h3>
+      <div class="feature-item">
+        <div>
+          <div class="fn">课表</div>
+          <div class="small muted">课程表、一键导入</div>
+        </div>
+        <div class="switch" id="toggleSchedule"><div class="knob"></div></div>
+      </div>
       <div class="feature-item">
         <div>
           <div class="fn">生理期记录</div>
@@ -691,9 +714,13 @@ table.sched td{vertical-align:top}
         <input type="date" id="wDate">
       </div>
       <div class="field">
-        <label>类型</label>
-        <select id="wType"></select>
+        <label>开始时间</label>
+        <input type="time" id="wTime">
       </div>
+    </div>
+    <div class="field">
+      <label>类型</label>
+      <select id="wType"></select>
     </div>
     <div class="field">
       <label>时长（分钟）</label>
@@ -783,10 +810,11 @@ let DB = loadData() || {
   periods: [],   // {id,start,duration}
   events: [],    // {id,date,title,type,color}
   workouts: [],  // {id,date,type,minutes,note}
-  settings: { periodLen:5, cycleLen:0, theme:'light', showPeriod:true, showWorkout:true }
+  settings: { periodLen:5, cycleLen:0, theme:'light', showSchedule:true, showPeriod:true, showWorkout:true }
 };
 if(!DB.events) DB.events = [];
 if(!DB.workouts) DB.workouts = [];
+if(DB.settings.showSchedule === undefined) DB.settings.showSchedule = true;
 if(DB.settings.showPeriod === undefined) DB.settings.showPeriod = true;
 if(DB.settings.showWorkout === undefined) DB.settings.showWorkout = true;
 if(!DB.settings.theme) DB.settings.theme = 'light';
@@ -1295,42 +1323,61 @@ function renderTimeline(){
     if(e<s) e=s+60;
     blocks.push({start:s, end:e, label:t.title, sub:(t.done?'✓ 已做完':'🕐 '+min2t(s)+' · '+PRIO_LABEL[t.priority]+'优先级'), color:t.done?'#22c08f':(PRIO_COLORS[t.priority]||'#ff5d8f'), kind:'task', done:t.done, priority:t.priority});
   });
+  DB.workouts.filter(w=>w.date===tlDate).forEach(w=>{
+    let s = w.time ? t2min(w.time) : TL_START;
+    let e = s + (+w.minutes||30);
+    if(e<s) e=s+30;
+    blocks.push({start:s, end:e, label:w.type, sub:w.minutes+'分钟', color:'#0ea5e9', kind:'workout', done:false});
+  });
 
   // 清掉旧 block
   el('tlArea').querySelectorAll('.tl-block').forEach(b=>b.remove());
 
-  // 处理重叠/过近：错列布局，动态分列，保证可读
   const GAP=15, MIN_H=36; // 分钟：间隔<15分视为冲突；最短视觉时长36分
-  blocks.sort((a,b)=>a.start-b.start);
-  const lanes=[];
-  blocks.forEach(b=>{
-    let lane=0;
-    while(lanes[lane] && lanes[lane].some(p=>p.end+GAP>b.start && p.start-GAP<b.end)) lane++;
-    (lanes[lane]=lanes[lane]||[]).push(b);
-    b.lane=lane;
-  });
-  const laneCount=lanes.length;
-  const leftPct=3, laneW=(100-leftPct)/laneCount;
+  function assignLanes(list){
+    list.sort((a,b)=>a.start-b.start);
+    const lanes=[];
+    list.forEach(b=>{
+      let lane=0;
+      while(lanes[lane] && lanes[lane].some(p=>p.end+GAP>b.start && p.start-GAP<b.end)) lane++;
+      (lanes[lane]=lanes[lane]||[]).push(b);
+      b.lane=lane;
+    });
+    return Math.max(1, lanes.length);
+  }
+  function renderLane(list, leftBase, widthBase){
+    const laneCount = assignLanes(list);
+    const laneW = widthBase / laneCount;
+    list.forEach(b=>{
+      let s=b.start, e=b.end;
+      if(e-s<MIN_H) e=s+MIN_H;
+      if(e>TL_END){ e=TL_END; if(s>e-8) s=e-8; }
+      const top=((s-TL_START)/TL_RANGE*100);
+      const hgt=((e-s)/TL_RANGE*100);
+      const short = (b.end-b.start) < 40;
+      const d=document.createElement('div');
+      d.className='tl-block';
+      d.style.top=top+'%';
+      d.style.height='calc('+hgt+'% - 3px)';
+      d.style.left=(leftBase + b.lane*laneW)+'%';
+      d.style.width=(laneW-1)+'%';
+      d.style.borderLeftColor=b.color;
+      d.title=b.label+(b.sub?' · '+b.sub:'');
+      d.innerHTML='<b'+(b.done?' class="done"':'')+'>'+esc(b.label)+'</b>'
+        +(short?'':'<span class="ts">'+esc(b.sub)+'</span>');
+      el('tlArea').appendChild(d);
+    });
+  }
 
-  blocks.forEach(b=>{
-    let s=b.start, e=b.end;
-    if(e-s<MIN_H) e=s+MIN_H;              // 太短就拉长，避免压成一条线
-    if(e>TL_END){ e=TL_END; if(s>e-8) s=e-8; }
-    const top=((s-TL_START)/TL_RANGE*100);
-    const hgt=((e-s)/TL_RANGE*100);
-    const short = (b.end-b.start) < 40;   // 时长太短：只显示标题，时间放悬浮提示
-    const d=document.createElement('div');
-    d.className='tl-block';
-    d.style.top=top+'%';
-    d.style.height='calc('+hgt+'% - 3px)';
-    d.style.left=(leftPct + b.lane*laneW)+'%';
-    d.style.width=(laneW-1)+'%';
-    d.style.borderLeftColor=b.color;
-    d.title=b.label+(b.sub?' · '+b.sub:'');
-    d.innerHTML='<b'+(b.done?' class="done"':'')+'>'+esc(b.label)+'</b>'
-      +(short?'':'<span class="ts">'+esc(b.sub)+'</span>');
-    el('tlArea').appendChild(d);
-  });
+  // 有课：左栏课表，右栏计划+运动；没课：计划+运动占满
+  const courseBlocks = blocks.filter(b=>b.kind==='course');
+  const otherBlocks = blocks.filter(b=>b.kind!=='course');
+  if(courseBlocks.length){
+    renderLane(courseBlocks, 2, 48);   // 左栏：课表
+    renderLane(otherBlocks, 52, 46);   // 右栏：计划 + 运动
+  }else{
+    renderLane(otherBlocks, 2, 96);    // 没课：计划+运动占满
+  }
 
   el('tlDay').textContent = fmtCN(tlDate)+(tlDate===todayStr()?'（今天）':'');
   el('tlToday').disabled = tlDate===todayStr();
@@ -1367,13 +1414,12 @@ function renderWeek(){
     if(!items.length){
       cols += '<div class="week-empty">无安排</div>';
     }else{
-      items.forEach(it=>{
-        cols += '<div class="week-item'+(it.done?' done':'')+'">'
+      items.slice(0,3).forEach(it=>{
+        cols += '<div class="week-item'+(it.done?' done':'')+'" title="'+esc(it.title)+(it.t?' '+esc(it.t):'')+'">'
           + '<div class="bar" style="background:'+it.color+'"></div>'
-          + '<div class="wbody"><div class="wt">'+esc(it.title)+'</div>'
-          + (it.t?'<div class="wtime">🕐 '+esc(it.t)+'</div>':'')
-          + '</div></div>';
+          + '<div class="wbody"><div class="wt">'+esc(it.title)+'</div></div></div>';
       });
+      if(items.length>3) cols += '<div class="more">+'+(items.length-3)+'</div>';
     }
     cols += '</div>';
   }
@@ -1430,9 +1476,12 @@ function renderMonth(){
     const ds=toStr(new Date(y,m,d));
     const evs=DB.events.filter(e=>e.date===ds).sort((a,b)=>a.title<b.title?-1:1);
     const marks=dayMarkers(ds);
-    html+='<div class="month-cell'+(ds===today?' today':'')+'" data-date="'+ds+'">'
+    const pf=dayFlags(ds); // 经期状态
+    const pft=pf?({'period':'经期','period-pred':'预计经期','ovu':'排卵日'}[pf]):'';
+    html+='<div class="month-cell'+(ds===today?' today':'')+(pf==='period'?' period-day':'')+'" data-date="'+ds+'">'
       +'<div class="mnum">'+d;
     marks.forEach(mk=>{ html+='<span class="month-mark '+mk.kind+'">'+esc(mk.name)+'</span>'; });
+    if(pf) html+='<span class="period-dot '+pf+'" title="'+pft+'"></span>';
     html+='</div>';
     evs.slice(0,2).forEach(e=>{
       html+='<div class="month-ev"><span class="dot" style="background:'+e.color+'"></span>'+esc(e.title)+'</div>';
@@ -1509,20 +1558,27 @@ function renderThemes(){
 
 /* ================= 功能开关 ================= */
 function renderFeatureToggles(){
+  el('toggleSchedule').classList.toggle('on', DB.settings.showSchedule);
   el('togglePeriod').classList.toggle('on', DB.settings.showPeriod);
   el('toggleWorkout').classList.toggle('on', DB.settings.showWorkout);
 }
 function updateFeatureTabs(){
-  // 显示/隐藏底部导航的生理期、运动
+  // 显示/隐藏底部导航的课表、生理期、运动
   document.querySelectorAll('nav.tabs button').forEach(b=>{
+    if(b.dataset.tab==='schedule') b.style.display = DB.settings.showSchedule ? '' : 'none';
     if(b.dataset.tab==='period') b.style.display = DB.settings.showPeriod ? '' : 'none';
     if(b.dataset.tab==='workout') b.style.display = DB.settings.showWorkout ? '' : 'none';
   });
   // 如果当前 tab 被关闭，切回总览
   const active = document.querySelector('nav.tabs button.active');
+  if(active && active.dataset.tab==='schedule' && !DB.settings.showSchedule) switchTab('overview');
   if(active && active.dataset.tab==='period' && !DB.settings.showPeriod) switchTab('overview');
   if(active && active.dataset.tab==='workout' && !DB.settings.showWorkout) switchTab('overview');
 }
+el('toggleSchedule').addEventListener('click', ()=>{
+  DB.settings.showSchedule = !DB.settings.showSchedule;
+  save(); renderFeatureToggles(); updateFeatureTabs();
+});
 el('togglePeriod').addEventListener('click', ()=>{
   DB.settings.showPeriod = !DB.settings.showPeriod;
   save(); renderFeatureToggles(); updateFeatureTabs();
@@ -1533,8 +1589,10 @@ el('toggleWorkout').addEventListener('click', ()=>{
 });
 
 /* ================= 运动 ================= */
+let workoutMonthCursor = new Date();
 function renderWorkout(){
   renderWorkoutStats();
+  renderWorkoutMonth();
   renderWorkoutList();
 }
 function renderWorkoutStats(){
@@ -1551,6 +1609,42 @@ function renderWorkoutStats(){
     +'<div class="stat"><div class="v">'+weekCount+'</div><div class="k">本周次数</div></div>'
     +'<div class="stat"><div class="v">'+weekMin+'</div><div class="k">本周分钟</div></div>';
 }
+function renderWorkoutMonth(){
+  const y=workoutMonthCursor.getFullYear(), m=workoutMonthCursor.getMonth();
+  el('woMonth').textContent = y+'年'+(m+1)+'月';
+  const first=new Date(y,m,1);
+  const startOffset=(first.getDay()+6)%7;
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const today=todayStr();
+  let html='';
+  WEEK_NAMES.forEach(w=>html+='<div class="mwd">'+w+'</div>');
+  for(let i=0;i<startOffset;i++) html+='<div class="month-cell dim"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const ds=toStr(new Date(y,m,d));
+    const ws=DB.workouts.filter(w=>w.date===ds);
+    html+='<div class="month-cell'+(ds===today?' today':'')+'" data-date="'+ds+'">'
+      +'<div class="mnum">'+d+'</div>';
+    if(ws.length){
+      ws.slice(0,2).forEach(w=>{
+        html+='<div class="month-ev"><span class="dot" style="background:#0ea5e9"></span>'+esc(w.type)+' '+w.minutes+'分</div>';
+      });
+      if(ws.length>2) html+='<div class="more">+'+(ws.length-2)+' 项</div>';
+    }
+    html+='</div>';
+  }
+  el('workoutMonthGrid').innerHTML=html;
+  el('workoutMonthGrid').querySelectorAll('.month-cell[data-date]').forEach(cell=>{
+    cell.addEventListener('click', ()=>{
+      const ds=cell.dataset.date;
+      const ws=DB.workouts.filter(w=>w.date===ds);
+      if(!ws.length){ alert(ds+' 没有运动记录'); return; }
+      alert(ds+'：\n'+ws.map(w=>w.type+' '+w.minutes+'分钟'+(w.time?'（'+w.time+'）':'')).join('\n'));
+    });
+  });
+}
+el('woPrev').addEventListener('click', ()=>{ workoutMonthCursor.setMonth(workoutMonthCursor.getMonth()-1); renderWorkoutMonth(); });
+el('woNext').addEventListener('click', ()=>{ workoutMonthCursor.setMonth(workoutMonthCursor.getMonth()+1); renderWorkoutMonth(); });
+el('woToday').addEventListener('click', ()=>{ workoutMonthCursor=new Date(); renderWorkoutMonth(); });
 function renderWorkoutList(){
   const list=[...DB.workouts].sort((a,b)=>a.date<b.date?1:-1);
   const box=el('workoutList');
@@ -1558,7 +1652,7 @@ function renderWorkoutList(){
   box.innerHTML = list.map(w=>
     '<div class="rec">'
     +'<div style="flex:1;min-width:0"><div style="font-weight:600">'+esc(w.type)+'</div>'
-    +'<div class="small muted">'+esc(w.date)+' · '+w.minutes+' 分钟'+(w.note?' · '+esc(w.note):'')+'</div></div>'
+    +'<div class="small muted">'+esc(w.date)+(w.time?' '+esc(w.time):'')+' · '+w.minutes+' 分钟'+(w.note?' · '+esc(w.note):'')+'</div></div>'
     +'<button class="icon-btn w-del" data-id="'+w.id+'" style="width:28px;height:28px;font-size:14px">🗑</button></div>'
   ).join('');
   box.querySelectorAll('.w-del').forEach(b=>b.addEventListener('click', ()=>{
@@ -1570,6 +1664,7 @@ function renderWorkoutList(){
 }
 function openWorkoutModal(){
   el('wDate').value = todayStr();
+  el('wTime').value = '';
   el('wType').innerHTML = WORKOUT_TYPES.map(t=>'<option>'+t+'</option>').join('');
   el('wMinutes').value = 30;
   el('wNote').value = '';
@@ -1578,10 +1673,10 @@ function openWorkoutModal(){
 el('addWorkoutBtn').addEventListener('click', openWorkoutModal);
 el('workoutCancel').addEventListener('click', ()=>el('workoutModal').classList.remove('open'));
 el('workoutSave').addEventListener('click', ()=>{
-  const date=el('wDate').value, type=el('wType').value, minutes=+el('wMinutes').value;
+  const date=el('wDate').value, time=el('wTime').value, type=el('wType').value, minutes=+el('wMinutes').value;
   if(!date){ alert('请选择日期'); return; }
   if(!minutes||minutes<1){ alert('请填写有效时长'); return; }
-  DB.workouts.push({id:uid(), date, type, minutes, note:el('wNote').value.trim()});
+  DB.workouts.push({id:uid(), date, time, type, minutes, note:el('wNote').value.trim()});
   save(); renderWorkout();
   el('workoutModal').classList.remove('open');
 });
@@ -1664,6 +1759,7 @@ el('importFile').addEventListener('change', e=>{
       DB = data;
       if(!DB.settings) DB.settings = { periodLen:5, cycleLen:0, theme:'light' };
       if(!DB.settings.theme) DB.settings.theme = 'light';
+      if(DB.settings.showSchedule === undefined) DB.settings.showSchedule = true;
       if(DB.settings.showPeriod === undefined) DB.settings.showPeriod = true;
       if(DB.settings.showWorkout === undefined) DB.settings.showWorkout = true;
       if(!DB.events) DB.events = [];
