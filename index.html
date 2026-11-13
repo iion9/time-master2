@@ -248,6 +248,13 @@ table.sched td{vertical-align:top}
 .theme-item .sw{display:flex;gap:4px;margin-bottom:8px}
 .theme-item .sw i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.1)}
 .theme-item .nm{font-size:14px;font-weight:600}
+.feature-item{display:flex;align-items:center;justify-content:space-between;padding:12px 2px;border-bottom:1px solid var(--line)}
+.feature-item:last-child{border-bottom:none}
+.feature-item .fn{font-size:15px;font-weight:500}
+.switch{width:51px;height:31px;border-radius:16px;background:var(--fill);position:relative;cursor:pointer;transition:.2s;flex:0 0 auto}
+.switch .knob{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s}
+.switch.on{background:var(--ok)}
+.switch.on .knob{left:22px}
 
 /* ===== 弹窗 ===== */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50;display:none;align-items:flex-end;justify-content:center}
@@ -301,6 +308,7 @@ table.sched td{vertical-align:top}
   <button data-tab="schedule"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h5v18H6a2 2 0 01-2-2zM20 5a2 2 0 00-2-2h-5v18h5a2 2 0 002-2z"/></svg></span><span>课表</span></button>
   <button data-tab="tasks"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span>计划</span></button>
   <button data-tab="period"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="7" r="2"/></svg></span><span>生理期</span></button>
+  <button data-tab="workout"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg></span><span>运动</span></button>
   <button data-tab="settings"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></span><span>设置</span></button>
 </nav>
 <div id="storageWarn" class="storage-warn hidden">
@@ -475,11 +483,44 @@ table.sched td{vertical-align:top}
     </div>
   </section>
 
+  <!-- ============ 运动 ============ -->
+  <section class="tab" id="tab-workout">
+    <div class="card">
+      <h3>运动统计</h3>
+      <div class="stats" id="workoutStats"></div>
+    </div>
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <h3 style="margin:0">运动记录</h3>
+        <div class="spacer"></div>
+        <button class="btn mini" id="addWorkoutBtn">＋ 记录运动</button>
+      </div>
+      <div id="workoutList"></div>
+    </div>
+  </section>
+
   <!-- ============ 设置 ============ -->
   <section class="tab" id="tab-settings">
     <div class="card">
       <h3>主题风格</h3>
       <div class="theme-list" id="themeList"></div>
+    </div>
+    <div class="card">
+      <h3>功能开关 <span class="hint">关闭后对应入口会隐藏</span></h3>
+      <div class="feature-item">
+        <div>
+          <div class="fn">生理期记录</div>
+          <div class="small muted">经期、周期预测、排卵日</div>
+        </div>
+        <div class="switch" id="togglePeriod"><div class="knob"></div></div>
+      </div>
+      <div class="feature-item">
+        <div>
+          <div class="fn">运动计划</div>
+          <div class="small muted">运动打卡、时长统计</div>
+        </div>
+        <div class="switch" id="toggleWorkout"><div class="knob"></div></div>
+      </div>
     </div>
     <div class="card">
       <h3>关于</h3>
@@ -640,6 +681,35 @@ table.sched td{vertical-align:top}
   </div>
 </div>
 
+<!-- 运动弹窗 -->
+<div class="modal" id="workoutModal">
+  <div class="sheet">
+    <h3>记录运动</h3>
+    <div class="grid2">
+      <div class="field">
+        <label>日期</label>
+        <input type="date" id="wDate">
+      </div>
+      <div class="field">
+        <label>类型</label>
+        <select id="wType"></select>
+      </div>
+    </div>
+    <div class="field">
+      <label>时长（分钟）</label>
+      <input type="number" id="wMinutes" min="1" max="600" value="30">
+    </div>
+    <div class="field">
+      <label>备注（可选）</label>
+      <textarea id="wNote" rows="2" placeholder="例如：跑步 5 公里、胸背训练…"></textarea>
+    </div>
+    <div class="foot">
+      <button class="btn ghost" id="workoutCancel">取消</button>
+      <button class="btn" id="workoutSave">保存</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ================= 常量 ================= */
 const WEEK_NAMES = ['一','二','三','四','五','六','日'];
@@ -654,6 +724,7 @@ const PRIO_LABEL = ['低','中','高'];
 const PRIO_COLORS = ['#94a3b8','#f59e0b','#ef4444']; // 低、中、高
 const EVENT_TYPES = ['纪念日','生日','考试','活动','其他'];
 const EVENT_COLORS = ['#ff2d55','#ff9500','#007aff','#34c759','#8e8e93'];
+const WORKOUT_TYPES = ['跑步','健身','瑜伽','游泳','骑行','球类','跳绳','散步','其他'];
 // 二十四节气（公历月日近似，格式 MMDD）
 const SOLAR_TERMS = [
   ['小寒','0105'],['大寒','0120'],['立春','0204'],['雨水','0219'],
@@ -711,9 +782,13 @@ let DB = loadData() || {
   tasks: [],     // {id,title,date,start,end,cat,priority,done,note}
   periods: [],   // {id,start,duration}
   events: [],    // {id,date,title,type,color}
-  settings: { periodLen:5, cycleLen:0, theme:'light' }
+  workouts: [],  // {id,date,type,minutes,note}
+  settings: { periodLen:5, cycleLen:0, theme:'light', showPeriod:true, showWorkout:true }
 };
 if(!DB.events) DB.events = [];
+if(!DB.workouts) DB.workouts = [];
+if(DB.settings.showPeriod === undefined) DB.settings.showPeriod = true;
+if(DB.settings.showWorkout === undefined) DB.settings.showWorkout = true;
 if(!DB.settings.theme) DB.settings.theme = 'light';
 function save(){
   const ok = storageSet(KEY, JSON.stringify(DB));
@@ -1432,6 +1507,85 @@ function renderThemes(){
   });
 }
 
+/* ================= 功能开关 ================= */
+function renderFeatureToggles(){
+  el('togglePeriod').classList.toggle('on', DB.settings.showPeriod);
+  el('toggleWorkout').classList.toggle('on', DB.settings.showWorkout);
+}
+function updateFeatureTabs(){
+  // 显示/隐藏底部导航的生理期、运动
+  document.querySelectorAll('nav.tabs button').forEach(b=>{
+    if(b.dataset.tab==='period') b.style.display = DB.settings.showPeriod ? '' : 'none';
+    if(b.dataset.tab==='workout') b.style.display = DB.settings.showWorkout ? '' : 'none';
+  });
+  // 如果当前 tab 被关闭，切回总览
+  const active = document.querySelector('nav.tabs button.active');
+  if(active && active.dataset.tab==='period' && !DB.settings.showPeriod) switchTab('overview');
+  if(active && active.dataset.tab==='workout' && !DB.settings.showWorkout) switchTab('overview');
+}
+el('togglePeriod').addEventListener('click', ()=>{
+  DB.settings.showPeriod = !DB.settings.showPeriod;
+  save(); renderFeatureToggles(); updateFeatureTabs();
+});
+el('toggleWorkout').addEventListener('click', ()=>{
+  DB.settings.showWorkout = !DB.settings.showWorkout;
+  save(); renderFeatureToggles(); updateFeatureTabs();
+});
+
+/* ================= 运动 ================= */
+function renderWorkout(){
+  renderWorkoutStats();
+  renderWorkoutList();
+}
+function renderWorkoutStats(){
+  const ws = DB.workouts;
+  const totalMin = ws.reduce((a,b)=>a+(+b.minutes||0),0);
+  const totalCount = ws.length;
+  const weekStart = addDaysStr(todayStr(), -(weekdayOf(todayStr())-1));
+  const weekCount = ws.filter(w=>w.date>=weekStart).length;
+  const weekMin = ws.filter(w=>w.date>=weekStart).reduce((a,b)=>a+(+b.minutes||0),0);
+  const hours = Math.floor(totalMin/60), mins = totalMin%60;
+  el('workoutStats').innerHTML =
+    '<div class="stat"><div class="v">'+totalCount+'</div><div class="k">累计次数</div></div>'
+    +'<div class="stat"><div class="v">'+(hours>0?hours+'小时'+mins+'分':mins+'分钟')+'</div><div class="k">累计时长</div></div>'
+    +'<div class="stat"><div class="v">'+weekCount+'</div><div class="k">本周次数</div></div>'
+    +'<div class="stat"><div class="v">'+weekMin+'</div><div class="k">本周分钟</div></div>';
+}
+function renderWorkoutList(){
+  const list=[...DB.workouts].sort((a,b)=>a.date<b.date?1:-1);
+  const box=el('workoutList');
+  if(!list.length){ box.innerHTML='<div class="empty"><div class="ico">🏃</div>还没有运动记录，点「记录运动」开始吧</div>'; return; }
+  box.innerHTML = list.map(w=>
+    '<div class="rec">'
+    +'<div style="flex:1;min-width:0"><div style="font-weight:600">'+esc(w.type)+'</div>'
+    +'<div class="small muted">'+esc(w.date)+' · '+w.minutes+' 分钟'+(w.note?' · '+esc(w.note):'')+'</div></div>'
+    +'<button class="icon-btn w-del" data-id="'+w.id+'" style="width:28px;height:28px;font-size:14px">🗑</button></div>'
+  ).join('');
+  box.querySelectorAll('.w-del').forEach(b=>b.addEventListener('click', ()=>{
+    if(confirm('删除这条运动记录？')){
+      DB.workouts=DB.workouts.filter(w=>w.id!==b.dataset.id);
+      save(); renderWorkout();
+    }
+  }));
+}
+function openWorkoutModal(){
+  el('wDate').value = todayStr();
+  el('wType').innerHTML = WORKOUT_TYPES.map(t=>'<option>'+t+'</option>').join('');
+  el('wMinutes').value = 30;
+  el('wNote').value = '';
+  el('workoutModal').classList.add('open');
+}
+el('addWorkoutBtn').addEventListener('click', openWorkoutModal);
+el('workoutCancel').addEventListener('click', ()=>el('workoutModal').classList.remove('open'));
+el('workoutSave').addEventListener('click', ()=>{
+  const date=el('wDate').value, type=el('wType').value, minutes=+el('wMinutes').value;
+  if(!date){ alert('请选择日期'); return; }
+  if(!minutes||minutes<1){ alert('请填写有效时长'); return; }
+  DB.workouts.push({id:uid(), date, type, minutes, note:el('wNote').value.trim()});
+  save(); renderWorkout();
+  el('workoutModal').classList.remove('open');
+});
+
 function renderToday(){
   const today=todayStr();
   const list=DB.tasks.filter(t=>t.date===today).sort((a,b)=>(a.done-b.done)||((a.start||'99')<(b.start||'99')?-1:1));
@@ -1470,10 +1624,13 @@ function init(){
   el('setCycleLen').value = DB.settings.cycleLen;
   el('eventType').innerHTML = EVENT_TYPES.map((t,i)=>'<option value="'+i+'">'+t+'</option>').join('');
   applyTheme(DB.settings.theme || 'light');
+  renderFeatureToggles();
+  updateFeatureTabs();
   showStorageWarn();
   renderSchedule();
   renderTasks();
   renderPeriod();
+  renderWorkout();
   switchView('day');
   renderTimeline();
   renderToday();
@@ -1507,7 +1664,10 @@ el('importFile').addEventListener('change', e=>{
       DB = data;
       if(!DB.settings) DB.settings = { periodLen:5, cycleLen:0, theme:'light' };
       if(!DB.settings.theme) DB.settings.theme = 'light';
+      if(DB.settings.showPeriod === undefined) DB.settings.showPeriod = true;
+      if(DB.settings.showWorkout === undefined) DB.settings.showWorkout = true;
       if(!DB.events) DB.events = [];
+      if(!DB.workouts) DB.workouts = [];
       save();
       init();
       alert('导入成功！');
